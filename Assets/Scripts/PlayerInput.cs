@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private GameObject colliderCheckPreview;
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    private Actions actions;
     private float speed = 5f;
     private Vector2 lastMovement;
     private Vector2 movement = Vector2.right;
@@ -18,15 +19,37 @@ public class PlayerInput : MonoBehaviour
     {
         this.rb = GetComponent<Rigidbody2D>();
         this.sprite = GetComponent<SpriteRenderer>();
+        this.RegisterInput();
     }
 
-    public void Walk(InputAction.CallbackContext context)
+    private void OnDestroy()
+    {
+        this.UnregisterActions();
+    }
+
+    private void RegisterInput()
+    {
+        this.actions = new Actions();
+        this.actions.Player.Interact.performed += Interact;
+        this.actions.Player.Move.performed += Walk;
+        this.actions.Player.Move.canceled += Walk;
+        this.actions.Player.Enable();
+    }
+
+    private void UnregisterActions()
+    {
+        this.actions.Player.Interact.performed -= Interact;
+        this.actions.Player.Move.performed -= Walk;
+        this.actions.Player.Move.canceled -= Walk;
+        this.actions.Player.Disable();
+    }
+
+    private void Walk(InputAction.CallbackContext context)
     {
         this.movement = context.ReadValue<Vector2>();
         if (this.movement.sqrMagnitude > 0f)
         {
             this.movement.Normalize();
-            this.rb.velocity = this.movement * this.speed;
             this.colliderCheckPreview.transform.position = this.transform.position + (Vector3) this.movement;
             if (this.movement.x != 0)
             {
@@ -40,32 +63,32 @@ public class PlayerInput : MonoBehaviour
         }
     }
     
-    public void Interact(InputAction.CallbackContext context)
+    private void Interact(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        Debug.Log("Interact");
+        Vector3 origin = this.transform.position;
+        if (this.movement.sqrMagnitude > 0)
         {
-            Vector3 origin = this.transform.position;
-            if (this.movement.sqrMagnitude > 0)
+            origin += (Vector3) this.movement;
+        }
+        else
+        {
+            origin += (Vector3) this.lastMovement;
+        }
+        
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(origin, 0.1f);//@TODO layermask?
+        foreach (Collider2D collision in collisions)
+        {
+            Debug.Log(collision.gameObject);
+            if (collision.gameObject.CompareTag("Door"))
             {
-                origin = (Vector3) this.movement.normalized;
-            }
-            else
-            {
-                origin += (Vector3) this.lastMovement.normalized;
-            }
-            
-            Collider2D[] collisions = Physics2D.OverlapCircleAll(origin, 0.1f);//@TODO layermask?
-            foreach (Collider2D collision in collisions)
-            {
-                if (collision.gameObject.CompareTag("Door"))
-                {
-                    collision.gameObject.GetComponent<Door>().Toggle();
-                }
+                collision.gameObject.GetComponent<Door>().Toggle();
             }
         }
     }
 
     private void FixedUpdate()
     {
+        this.rb.velocity = this.movement * this.speed;
     }
 }
