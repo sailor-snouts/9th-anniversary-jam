@@ -5,12 +5,11 @@ using UnityEngine.InputSystem;
 
 public class Turret : MonoBehaviour
 {
-    private Actions actions;
+    [SerializeField] private GameObject bullet = null;
+    private Actions actions = null;
     private PlayerInput player = null;
-
-    private void Start()
-    {
-    }
+    private Vector2 direction = Vector2.zero;
+    private float fireRate = 0.5f;
 
     private void OnDestroy()
     {
@@ -22,7 +21,8 @@ public class Turret : MonoBehaviour
         this.actions = new Actions();
         this.actions.Turret.MouseAim.performed += MouseAim;
         this.actions.Turret.JoystickAim.performed += JoystickAim;
-        this.actions.Turret.Fire.performed += Fire;
+        this.actions.Turret.Fire.started += Fire;
+        this.actions.Turret.Fire.canceled += Fire;
         this.actions.Turret.Unequip.performed += Unequip;
         this.actions.Turret.Enable();
     }
@@ -31,35 +31,57 @@ public class Turret : MonoBehaviour
     {
         this.actions.Turret.MouseAim.performed -= MouseAim;
         this.actions.Turret.JoystickAim.performed -= JoystickAim;
-        this.actions.Turret.Fire.performed -= Fire;
+        this.actions.Turret.Fire.started -= Fire;
+        this.actions.Turret.Fire.canceled -= Fire;
         this.actions.Turret.Unequip.performed -= Unequip;
         this.actions.Player.Disable();
     }
 
     private void MouseAim(InputAction.CallbackContext context)
     {
-        Vector2 direction = (Vector2) Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>()) - (Vector2) this.transform.position;
-        this.Aim(direction);
+        Vector2 dir = (Vector2) Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>()) - (Vector2) this.transform.position;
+        this.Aim(dir);
     }
 
     private void JoystickAim(InputAction.CallbackContext context)
     {
-        Vector2 direction = context.ReadValue<Vector2>();
-        this.Aim(direction);
+        Vector2 dir = context.ReadValue<Vector2>();
+        this.Aim(dir);
     }
 
-    private void Aim(Vector2 direction)
+    private void Aim(Vector2 dir)
     {
-        if (direction.sqrMagnitude > 0f)
+        if (dir.sqrMagnitude > 0f)
         {
-            direction.Normalize();
-            transform.rotation=Quaternion.Euler(0f,0f,-Mathf.Atan2(direction.x,direction.y) * Mathf.Rad2Deg);
+            dir.Normalize();
+            this.direction = dir;
+            transform.rotation = Quaternion.Euler(0f,0f,-Mathf.Atan2(this.direction.x,this.direction.y) * Mathf.Rad2Deg);
         }
     }
 
     private void Fire(InputAction.CallbackContext context)
     {
-        Debug.Log("Fire");
+        if (context.started)
+        {
+            StartCoroutine("Shoot");
+        }
+
+        if (context.canceled)
+        {
+            StopCoroutine("Shoot");
+        }
+    }
+
+    IEnumerator Shoot()
+    {
+        for(;;) 
+        {
+            Vector3 spawn = this.transform.position;
+            GameObject obj = Instantiate(this.bullet, spawn, Quaternion.identity);
+            Bullet bullet = obj.GetComponent<Bullet>();
+            bullet.Fire(this.direction);
+            yield return new WaitForSeconds(this.fireRate);
+        }
     }
 
     public void Equip(PlayerInput player)

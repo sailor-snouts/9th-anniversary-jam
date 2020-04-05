@@ -383,7 +383,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.05
+  m_Intensity: 0.3
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: e74eaa2100000000
   m_LightCookieSprite: {fileID: 0}
@@ -1336,7 +1336,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.62, y: 3.88, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1364728262}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1364,6 +1365,7 @@ GameObject:
   - component: {fileID: 1364728262}
   - component: {fileID: 1364728261}
   - component: {fileID: 1364728263}
+  - component: {fileID: 1364728264}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -1428,12 +1430,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1364728260}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.5403285, y: 6.580862, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.1900005, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 1197022789}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1364728263
 MonoBehaviour:
@@ -1447,6 +1449,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c90814c5ee848947bdb9e90f6ba91eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 5278396316131571793, guid: 623eec0e80887f841a5446cdf277065d, type: 3}
+--- !u!58 &1364728264
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364728260}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1437139929
 GameObject:
   m_ObjectHideFlags: 0

@@ -49,6 +49,7 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Bullet.cs" t="Include" />
           <e p="Door.cs" t="Include" />
           <e p="PlayerActions.cs" t="Include" />
           <e p="PlayerInput.cs" t="Include" />
