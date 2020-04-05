@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Door
+  - Terminal
   layers:
   - Default
   - TransparentFX

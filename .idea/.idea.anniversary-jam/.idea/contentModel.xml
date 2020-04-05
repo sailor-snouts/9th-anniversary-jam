@@ -52,6 +52,8 @@
           <e p="Door.cs" t="Include" />
           <e p="PlayerActions.cs" t="Include" />
           <e p="PlayerInput.cs" t="Include" />
+          <e p="Terminal.cs" t="Include" />
+          <e p="Turret.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
