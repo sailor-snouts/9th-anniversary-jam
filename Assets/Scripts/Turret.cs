@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,6 +11,11 @@ public class Turret : MonoBehaviour
     private PlayerInput player = null;
     private Vector2 direction = Vector2.zero;
     private float fireRate = 0.5f;
+    
+    private void Start()
+    {
+        this.actions = new Actions();
+    }
 
     private void OnDestroy()
     {
@@ -18,7 +24,6 @@ public class Turret : MonoBehaviour
 
     private void RegisterInput()
     {
-        this.actions = new Actions();
         this.actions.Turret.MouseAim.performed += MouseAim;
         this.actions.Turret.JoystickAim.performed += JoystickAim;
         this.actions.Turret.Fire.started += Fire;
