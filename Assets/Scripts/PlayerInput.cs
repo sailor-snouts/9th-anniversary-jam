@@ -21,6 +21,7 @@ public class PlayerInput : MonoBehaviour
     {
         this.rb = GetComponent<Rigidbody2D>();
         this.sprite = GetComponent<SpriteRenderer>();
+        this.actions = new Actions();
         this.RegisterInput();
     }
 
@@ -31,7 +32,6 @@ public class PlayerInput : MonoBehaviour
 
     private void RegisterInput()
     {
-        this.actions = new Actions();
         this.actions.Player.Primary.performed += Primary;
         this.actions.Player.Secondary.performed += Secondary;
         this.actions.Player.Move.performed += Walk;
@@ -63,7 +63,7 @@ public class PlayerInput : MonoBehaviour
             if (this.movement.x != 0)
             {
                 this.lastMovement = this.movement;
-                this.sprite.flipX = this.lastMovement.x < 0;
+                this.sprite.flipX = this.lastMovement.x > 0;
             }
         }
         else
