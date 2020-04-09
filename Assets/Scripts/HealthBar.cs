@@ -8,10 +8,12 @@ public class HealthBar : MonoBehaviour
 {
     private Slider slider = null;
     private Image fill;
+    private Camera camera;
     [SerializeField] private Gradient gradient = null;
 
-    private void Start()
+    private void OnEnable()
     {
+        this.camera = Camera.main;
         this.slider = GetComponent<Slider>();
         this.fill = this.slider.fillRect.GetComponent<Image>();
         this.fill.color = this.gradient.Evaluate(1f);
@@ -27,5 +29,10 @@ public class HealthBar : MonoBehaviour
     {
         this.slider.value = value;
         this.fill.color = this.gradient.Evaluate(this.slider.normalizedValue);
+    }
+
+    private void LateUpdate()
+    {
+        this.transform.LookAt(this.transform.position + this.camera.transform.forward);
     }
 }
