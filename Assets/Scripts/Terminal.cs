@@ -8,7 +8,7 @@ public class Terminal : MonoBehaviour
 {
     [SerializeField] private Turret turret = null;
 
-    public void Enable(PlayerInput player)
+    public void Enable(PlayerController player)
     {
         this.turret.Equip(player);
     }

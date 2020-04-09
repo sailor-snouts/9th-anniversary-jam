@@ -8,7 +8,7 @@ public class Turret : MonoBehaviour
 {
     [SerializeField] private GameObject bullet = null;
     private Actions actions = null;
-    private PlayerInput player = null;
+    private PlayerController player = null;
     private Vector2 direction = Vector2.zero;
     private float fireRate = 0.5f;
     
@@ -89,7 +89,7 @@ public class Turret : MonoBehaviour
         }
     }
 
-    public void Equip(PlayerInput player)
+    public void Equip(PlayerController player)
     {
         this.player = player;
         this.player.Lock();

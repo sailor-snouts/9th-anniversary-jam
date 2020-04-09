@@ -16,13 +16,38 @@ public class ZombieAI : MonoBehaviour
     private int currentWayPoint;
     private bool reachedDestination = false;
     private float nextWayPointDistance = 0.5f;
+
+    private Health health = null;
+    private float damage = 100f;
     
     void Start()
     {
         this.sprite = GetComponent<SpriteRenderer>();
         this.seeker = GetComponent<Seeker>();
         this.rb = GetComponent<Rigidbody2D>();
+        this.health = GetComponent<Health>();
+        this.Register();
         InvokeRepeating("UpdatePath", 0f, 0.5f);
+    }
+
+    private void OnDestroy()
+    {
+        this.Unregister();
+    }
+
+    private void Register()
+    {
+        this.health.onDeath += this.OnDeath;
+    }
+
+    private void Unregister()
+    {
+        this.health.onDeath -= this.OnDeath;
+    }
+
+    private void OnDeath()
+    {
+        Destroy(this.gameObject);
     }
 
     private void UpdatePath()
@@ -65,6 +90,15 @@ public class ZombieAI : MonoBehaviour
         if (Vector2.Distance(this.transform.position, path.vectorPath[this.currentWayPoint]) < this.nextWayPointDistance)
         {
             this.currentWayPoint++;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Health playerHealth = other.gameObject.GetComponent<Health>();
+            playerHealth.Damage(this.damage);
         }
     }
 }
