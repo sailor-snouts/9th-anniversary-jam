@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 352092449180462259}
   - component: {fileID: 2197247006437969063}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3724928137901482732}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bulletSpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2175375917662929087}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.71, y: 0, z: 0}
+  m_LocalPosition: {x: -0.8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5024757300344403254}
@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5024757300344403254}
   - component: {fileID: 2555334585350073673}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 4630944439703355705}
   - component: {fileID: 4630944439703355704}
   - component: {fileID: 4630944439703355703}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,9 +379,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.17389607, y: -0.3806206}
+  m_Offset: {x: 0.17389607, y: -0.5564728}
   serializedVersion: 2
-  m_Radius: 0.5110916
+  m_Radius: 0.3352394
 --- !u!1 &5654429187150802320
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,7 +392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1156293569168182418}
   - component: {fileID: 3414564777503799069}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
