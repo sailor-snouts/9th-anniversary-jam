@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 public class Turret : MonoBehaviour
 {
     [SerializeField] private GameObject bullet = null;
+    [SerializeField] private Transform bulletSpawnPosition = null;
+    [SerializeField] private Transform barrel = null;
     private Actions actions = null;
     private PlayerController player = null;
     private Vector2 direction = Vector2.zero;
@@ -60,7 +62,7 @@ public class Turret : MonoBehaviour
         {
             dir.Normalize();
             this.direction = dir;
-            transform.rotation = Quaternion.Euler(0f,0f,-Mathf.Atan2(this.direction.x,this.direction.y) * Mathf.Rad2Deg);
+            this.barrel.rotation = Quaternion.Euler(0f,0f,-Mathf.Atan2(this.direction.x,this.direction.y) * Mathf.Rad2Deg - 90f);
         }
     }
 
@@ -81,7 +83,7 @@ public class Turret : MonoBehaviour
     {
         for(;;) 
         {
-            Vector3 spawn = this.transform.position;
+            Vector3 spawn = this.bulletSpawnPosition.position;
             GameObject obj = Instantiate(this.bullet, spawn, Quaternion.identity);
             Bullet bullet = obj.GetComponent<Bullet>();
             bullet.Fire(this.direction);

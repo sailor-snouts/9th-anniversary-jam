@@ -428,6 +428,7 @@
           <e p="Door.cs" t="Include" />
           <e p="Exit.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
+          <e p="GraphUpdate.cs" t="Include" />
           <e p="Health.cs" t="Include" />
           <e p="HealthBar.cs" t="Include" />
           <e p="PlayerActions.cs" t="Include" />

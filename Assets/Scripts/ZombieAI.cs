@@ -8,7 +8,8 @@ public class ZombieAI : MonoBehaviour
 {
     private SpriteRenderer sprite;
     private Rigidbody2D rb;
-    private float speed = 3f;
+    private CircleCollider2D circleCollider;
+    
     
     private Seeker seeker;
     public Transform target;
@@ -17,6 +18,7 @@ public class ZombieAI : MonoBehaviour
     private bool reachedDestination = false;
     private float nextWayPointDistance = 0.5f;
 
+    private float speed = 3f;
     private Health health = null;
     private float damage = 100f;
     
@@ -26,6 +28,7 @@ public class ZombieAI : MonoBehaviour
         this.seeker = GetComponent<Seeker>();
         this.rb = GetComponent<Rigidbody2D>();
         this.health = GetComponent<Health>();
+        this.circleCollider = GetComponent<CircleCollider2D>();
         this.Register();
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
@@ -53,7 +56,7 @@ public class ZombieAI : MonoBehaviour
     private void UpdatePath()
     {
         if (!this.seeker.IsDone()) return;
-        this.seeker.StartPath(this.transform.position, this.target.position, OnPathComplete);
+        this.seeker.StartPath(this.transform.position + (Vector3) this.circleCollider.offset, this.target.position, OnPathComplete);
     }
     
     private void OnPathComplete(Path p)
@@ -83,11 +86,11 @@ public class ZombieAI : MonoBehaviour
 
         
         this.reachedDestination = false;
-        Vector2 direction = (path.vectorPath[currentWayPoint] - this.transform.position).normalized;
+        Vector2 direction = (path.vectorPath[currentWayPoint] - (this.transform.position + (Vector3) this.circleCollider.offset)).normalized;
         this.rb.velocity = direction * this.speed;
         this.sprite.flipX = direction.x > 0;
 
-        if (Vector2.Distance(this.transform.position, path.vectorPath[this.currentWayPoint]) < this.nextWayPointDistance)
+        if (Vector2.Distance(this.transform.position + (Vector3) this.circleCollider.offset, path.vectorPath[this.currentWayPoint]) < this.nextWayPointDistance)
         {
             this.currentWayPoint++;
         }
